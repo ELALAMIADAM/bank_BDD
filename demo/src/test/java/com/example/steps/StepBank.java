@@ -3,9 +3,14 @@ package com.example.steps;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.example.PF.AccountOverviewPage;
 import com.example.PF.HomePage;
@@ -23,9 +28,16 @@ public class StepBank {
     RegisterPage rg;
     WelcomeUserPage wu;
     AccountOverviewPage ap;
+    URL gridUrl;
     @Before 
     public void setUp(){
-        driver = new ChromeDriver();
+        try {
+            gridUrl = new URL("http://selenium-hub:4444/wd/hub");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        ChromeOptions co = new ChromeOptions();
+        driver = new RemoteWebDriver(gridUrl, co);
         hp = new HomePage(driver);
         rg = new RegisterPage(driver);
         wu = new WelcomeUserPage(driver);
