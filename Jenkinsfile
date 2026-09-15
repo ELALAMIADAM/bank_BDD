@@ -15,7 +15,7 @@ pipeline {
 
             agent {
     docker {
-        image 'maven:3.8.3-openjdk-17'
+        image 'maven:3.9.9-openjdk-17'
         args "--entrypoint='' --shm-size=2g --network=pipeline_tp_selenium_default"
         reuseNode true
     }
@@ -27,13 +27,13 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            allure([
-                results: [[path: 'target/allure-results']]
-            ])
+    // post {
+    //     always {
+    //         allure([
+    //             results: [[path: 'target/allure-results']]
+    //         ])
 
-            sh 'docker compose down || true'
-        }
-    }
+    //         sh 'docker compose down || true'
+    //     }
+    // }
 }
